@@ -12,15 +12,6 @@ import db1config as cfg
 class StockDao:
     db = ""
     def __init__(self):
-        #self.db=""
-        #connect to the database
-#        self.db = mysql.connector.connect(
-#            host = cfg.mysql['host'],
-#            user= cfg.mysql['username'],
-#            password = cfg.mysql['password'],
-#            database =cfg.mysql['database']
-#        )
-
         self.db = mysql.connector.MySQLConnection(
             host = cfg.mysql['host'],
             user= cfg.mysql['username'],
@@ -29,23 +20,17 @@ class StockDao:
         
         )
 
-
-
-
-
-#    def connect(self):
-#        self.db = mysql.connector.connect(
-#            host = cfg.mysql['host'],
-#            user= cfg.mysql['username'],
-#            password = cfg.mysql['password'],
-#            database =cfg.mysql['database']
-#        )
-        
-    
     
     def create(self, stock):
         #create a new record within the database
-        cursor = self.db.cursor()
+        cnx = mysql.connector.MySQLConnection(
+            host = cfg.mysql['host'],
+            user= cfg.mysql['username'],
+            password = cfg.mysql['password'],
+            database =cfg.mysql['database']
+        
+        )
+        cursor = cnx.cursor()
         sql = "insert into stock_close (ID, SYMBOL, OPEN, CLOSE, VOLUME) values (%s,%s,%s,%s,%s)"
         values = [
             stock['ID'],
@@ -55,14 +40,21 @@ class StockDao:
             stock['volume']
         ]
         cursor.execute(sql, values)
-        self.db.commit()
+        cnx.commit()
+        cursor.close()
+        cnx.close()
         return cursor.lastrowid
-        #cursor.close()
-        #db.close()
 
     def addfromAPI(self, stock):
         #populate the database with the information received from the external API
-        cursor = self.db.cursor()
+        cnx = mysql.connector.MySQLConnection(
+            host = cfg.mysql['host'],
+            user= cfg.mysql['username'],
+            password = cfg.mysql['password'],
+            database =cfg.mysql['database']
+        
+        )
+        cursor = cnx.cursor()
         sql = "insert into stock_close (SYMBOL, OPEN, CLOSE, VOLUME) values (%s,%s,%s,%s)"
         values = [
             stock['symbol'],
@@ -72,7 +64,9 @@ class StockDao:
         ]
         #print(values)
         cursor.execute(sql, values)
-        self.db.commit()
+        cnx.db.commit()
+        cursor.close()
+        cnx.close()
         return cursor.lastrowid
 
 
@@ -85,8 +79,6 @@ class StockDao:
             database =cfg.mysql['database']
         
         )
-        #db = mysql.connector.connect(host = cfg.mysql['host'],user= cfg.mysql['username'],password = cfg.mysql['password'],database =cfg.mysql['database'])
-        #cnx = mysql.connector.connect()
         cursor = cnx.cursor()
         sql = 'select * from stock_close'
         cursor.execute(sql)
@@ -102,17 +94,33 @@ class StockDao:
 
     def findById(self, ID):
         #find an item from the database based on it's ID
-        cursor = self.db.cursor()
+        cnx = mysql.connector.MySQLConnection(
+            host = cfg.mysql['host'],
+            user= cfg.mysql['username'],
+            password = cfg.mysql['password'],
+            database =cfg.mysql['database']
+        
+        )
+        cursor = cnx.cursor()
         sql = 'select * from stock_close where ID = %s'
         values = [ ID ]
         cursor.execute(sql, values)
         result = cursor.fetchone()
+        cursor.close()
+        cnx.close()
         return self.convertToDict(result)
         
 
     def update(self, stock):
         #update a value in te database
-       cursor = self.db.cursor()
+        cnx = mysql.connector.MySQLConnection(
+            host = cfg.mysql['host'],
+            user= cfg.mysql['username'],
+            password = cfg.mysql['password'],
+            database =cfg.mysql['database']
+        
+        )
+       cursor = cnx.cursor()
        sql = "update stock_close set symbol = %s, open = %s, close = %s, volume = %s where ID = %s"
        values = [
            stock['symbol'],
@@ -123,17 +131,27 @@ class StockDao:
 
        ]
        cursor.execute(sql, values)
-       self.db.commit()
+       cnx.commit()
+       cursor.close()
+       cnx.close()
        return stock
 
     def delete(self, ID):
         #delete an item in the database
-       cursor = self.db.cursor()
+        cnx = mysql.connector.MySQLConnection(
+            host = cfg.mysql['host'],
+            user= cfg.mysql['username'],
+            password = cfg.mysql['password'],
+            database =cfg.mysql['database']
+        
+        )
+       cursor = cnx.cursor()
        sql = 'delete from stock_close where ID = %s'
        values = [ ID ]
        cursor.execute(sql, values)
-       self.db.commit()
-       
+       cnx.commit()
+       cursor.close()
+       cnx.close()       
        return {}
 
 
