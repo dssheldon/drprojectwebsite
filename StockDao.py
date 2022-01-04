@@ -13,14 +13,6 @@ class StockDao:
     db = ""
     def __init__(self):
         self.db=""
-        #self.db = mysql.connector.MySQLConnection(
-        #    host = cfg.mysql['host'],
-        #    user= cfg.mysql['username'],
-        #    password = cfg.mysql['password'],
-        #    database =cfg.mysql['database']
-        
-        #)
-
     
     def create(self, stock):
         #create a new record within the database

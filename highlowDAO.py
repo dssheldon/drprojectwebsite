@@ -13,17 +13,18 @@ class HighLowDao:
     #connect to the database
     db = ""
     def __init__(self):
-        self.db = mysql.connector.connect(
+        self.db = ""
+
+    #update the fields in the database with the values received from the API
+    def highLowsAPI(self, stock):
+        cnx = mysql.connector.MySQLConnection(
             host = cfg.mysql['host'],
             user= cfg.mysql['username'],
             password = cfg.mysql['password'],
             database =cfg.mysql['database']
+        
         )
-
-
-    #update the fields in the database with the values received from the API
-    def highLowsAPI(self, stock):
-        cursor = self.db.cursor()
+        cursor = cnx.cursor()
         sql = "insert into high_low (SYMBOL, HIGH, LOW) values (%s,%s,%s)"
         values = [
             stock['symbol'],
@@ -31,12 +32,21 @@ class HighLowDao:
             stock['low'],
         ]
         cursor.execute(sql, values)
-        self.db.commit()
-        return cursor.lastrowid
+        cnx.commit()
+        cursor.close()
+        cnx.close()
+        return values
 
     def getAll(self):
         #obtain all values from the database
-        cursor = self.db.cursor()
+        cnx = mysql.connector.MySQLConnection(
+            host = cfg.mysql['host'],
+            user= cfg.mysql['username'],
+            password = cfg.mysql['password'],
+            database =cfg.mysql['database']
+        
+        )
+        cursor = cnx.cursor()
         sql = 'select * from high_low'
         cursor.execute(sql)
         results = cursor.fetchall()
@@ -45,17 +55,28 @@ class HighLowDao:
             resultAsDict = self.convertToDict(result)
             returnArray.append(resultAsDict)
 
+        cursor.close()
+        cnx.close()
         return returnArray
 
     def delete(self, ID):
         #delete an item in the database
-       cursor = self.db.cursor()
-       sql = 'delete from high_low where ID = %s'
-       values = [ ID ]
-       cursor.execute(sql, values)
-       self.db.commit()
+        cnx = mysql.connector.MySQLConnection(
+            host = cfg.mysql['host'],
+            user= cfg.mysql['username'],
+            password = cfg.mysql['password'],
+            database =cfg.mysql['database']
+        
+        )
+        cursor = cnx.cursor()
+        sql = 'delete from high_low where ID = %s'
+        values = [ ID ]
+        cursor.execute(sql, values)
+        cnx.commit()
        
-       return {}
+        cursor.close()
+        cnx.close()
+        return {}
 
 
     def convertToDict(self, result):
