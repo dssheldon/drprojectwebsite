@@ -65,13 +65,8 @@ class StockDao:
 
     def getAll(self):
         #obtain all values from the database
-        db = mysql.connector.connect(
-            host = cfg.mysql['host'],
-            user= cfg.mysql['username'],
-            password = cfg.mysql['password'],
-            database =cfg.mysql['database']
-        )
-        cnx = mysql.connector.connect()
+        db = mysql.connector.connect(host = cfg.mysql['host'],user= cfg.mysql['username'],password = cfg.mysql['password'],database =cfg.mysql['database'])
+        #cnx = mysql.connector.connect()
         cursor = self.db.cursor()
         sql = 'select * from stock_close'
         cursor.execute(sql)
