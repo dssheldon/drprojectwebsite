@@ -78,9 +78,10 @@ class StockDao:
 
     def getAll(self):
         #obtain all values from the database
+        cnx = mysql.connector.MySQLConnection()
         #db = mysql.connector.connect(host = cfg.mysql['host'],user= cfg.mysql['username'],password = cfg.mysql['password'],database =cfg.mysql['database'])
         #cnx = mysql.connector.connect()
-        cursor = self.db.cursor()
+        cursor = cnx.cursor()
         sql = 'select * from stock_close'
         cursor.execute(sql)
         results = cursor.fetchall()
@@ -89,8 +90,8 @@ class StockDao:
             resultAsDict = self.convertToDict(result)
             returnArray.append(resultAsDict)
         
-        #cursor.close()
-        #db.close()
+        cursor.close()
+        cnx.close()
         return returnArray
 
     def findById(self, ID):
