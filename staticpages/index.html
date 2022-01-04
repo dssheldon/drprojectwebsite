@@ -149,7 +149,9 @@
 
         <script>
 
-            // script for closing out the user session by redirecing via ajax to the relevant app route
+            host = window.location.origin
+			
+			// script for closing out the user session by redirecing via ajax to the relevant app route
             function onLogout()
             {
                $.ajax
@@ -336,7 +338,7 @@
             function populateTable(){
                 //ajax getAll
                $.ajax({
-                   url:'http://127.0.0.1:5000/stocks',
+                   url:host+'/stocks',
                    method:'GET',
                    datatype:'JSON',
                    success:function(results){
