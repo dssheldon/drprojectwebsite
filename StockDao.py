@@ -65,7 +65,7 @@ class StockDao:
         ]
         #print(values)
         cursor.execute(sql, values)
-        cnx.db.commit()
+        cnx.commit()
         cursor.close()
         cnx.close()
         return cursor.lastrowid
