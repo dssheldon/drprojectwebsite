@@ -120,9 +120,9 @@ class StockDao:
             database =cfg.mysql['database']
         
         )
-       cursor = cnx.cursor()
-       sql = "update stock_close set symbol = %s, open = %s, close = %s, volume = %s where ID = %s"
-       values = [
+        cursor = cnx.cursor()
+        sql = "update stock_close set symbol = %s, open = %s, close = %s, volume = %s where ID = %s"
+        values = [
            stock['symbol'],
            stock['open'],
            stock['close'],
@@ -130,11 +130,11 @@ class StockDao:
            stock['ID']
 
        ]
-       cursor.execute(sql, values)
-       cnx.commit()
-       cursor.close()
-       cnx.close()
-       return stock
+        cursor.execute(sql, values)
+        cnx.commit()
+        cursor.close()
+        cnx.close()
+        return stock
 
     def delete(self, ID):
         #delete an item in the database
@@ -145,14 +145,14 @@ class StockDao:
             database =cfg.mysql['database']
         
         )
-       cursor = cnx.cursor()
-       sql = 'delete from stock_close where ID = %s'
-       values = [ ID ]
-       cursor.execute(sql, values)
-       cnx.commit()
-       cursor.close()
-       cnx.close()       
-       return {}
+        cursor = cnx.cursor()
+        sql = 'delete from stock_close where ID = %s'
+        values = [ ID ]
+        cursor.execute(sql, values)
+        cnx.commit()
+        cursor.close()
+        cnx.close()       
+        return {}
 
 
 
