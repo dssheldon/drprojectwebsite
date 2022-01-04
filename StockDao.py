@@ -14,12 +14,24 @@ class StockDao:
     def __init__(self):
         #self.db=""
         #connect to the database
-        self.db = mysql.connector.connect(
+#        self.db = mysql.connector.connect(
+#            host = cfg.mysql['host'],
+#            user= cfg.mysql['username'],
+#            password = cfg.mysql['password'],
+#            database =cfg.mysql['database']
+#        )
+
+        self.db = mysql.connector.MySQLConnection(
             host = cfg.mysql['host'],
             user= cfg.mysql['username'],
             password = cfg.mysql['password'],
             database =cfg.mysql['database']
+        
         )
+
+
+
+
 
 #    def connect(self):
 #        self.db = mysql.connector.connect(
@@ -66,7 +78,7 @@ class StockDao:
 
     def getAll(self):
         #obtain all values from the database
-        db = mysql.connector.connect(host = cfg.mysql['host'],user= cfg.mysql['username'],password = cfg.mysql['password'],database =cfg.mysql['database'])
+        #db = mysql.connector.connect(host = cfg.mysql['host'],user= cfg.mysql['username'],password = cfg.mysql['password'],database =cfg.mysql['database'])
         #cnx = mysql.connector.connect()
         cursor = self.db.cursor()
         sql = 'select * from stock_close'
@@ -77,8 +89,8 @@ class StockDao:
             resultAsDict = self.convertToDict(result)
             returnArray.append(resultAsDict)
         
-        cursor.close()
-        db.close()
+        #cursor.close()
+        #db.close()
         return returnArray
 
     def findById(self, ID):
