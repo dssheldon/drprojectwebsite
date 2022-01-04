@@ -68,7 +68,8 @@ class StockDao:
         cnx.commit()
         cursor.close()
         cnx.close()
-        return cursor.lastrowid
+        return values
+        #return cursor.lastrowid
 
 
     def getAll(self):
