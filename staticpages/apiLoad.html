@@ -117,12 +117,14 @@
 
         <script>
 
-            // script for closing out the user session by redirecing via ajax to the relevant app route
+            host = window.location.origin
+			
+			// script for closing out the user session by redirecing via ajax to the relevant app route
 			function onLogout()
             {
                $.ajax
                ({
-                    url: "/logout",
+                    url: host+"/logout",
                    success: function (result) 
                    {
                         console.log("Success")
@@ -149,7 +151,7 @@
             stock= getStockFromForm(thisElem)
             console.log(stock)
             $.ajax({
-                url:"/addFromAPI",
+                url:host+"/addFromAPI",
                 data:JSON.stringify(stock),
                 method:"POST",
                 dataType:"JSON",

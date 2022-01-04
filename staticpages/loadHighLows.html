@@ -119,7 +119,7 @@
             {
                $.ajax
                ({
-                    url: "/logout",
+                    url: host+"/logout",
                    success: function (result) 
                    {
                         console.log("Success")
@@ -142,7 +142,7 @@
                 var index = rowElement.rowIndex;
                 ID = rowElement.getAttribute("id");
                 $.ajax({
-                    url:"/highs/"+ID,
+                    url:host+"/highs/"+ID,
                     method:"DELETE",
                     dateType:"JSON",
                     success:function(result){

@@ -156,7 +156,7 @@
             {
                $.ajax
                ({
-                    url: "/logout",
+                    url: host+"/logout",
                    success: function (result) 
                    {
                         console.log("Success")
@@ -237,7 +237,7 @@
             function doCreate(){
                 stock= getStockFromForm()
                 $.ajax({
-                    url:"/stocks",
+                    url:host+"/stocks",
                     data:JSON.stringify(stock),
                     method:"POST",
                     dataType:"JSON",
@@ -266,7 +266,7 @@
             //update record based on the user amended values
             function updateServer(stock){
                $.ajax({
-                    url: "/stocks/"+stock.ID,
+                    url: host+"/stocks/"+stock.ID,
                     data: JSON.stringify(stock),
                     method: "PUT",
                     dataType: "JSON",
@@ -290,7 +290,7 @@
                 var index = rowElement.rowIndex;
                 ID = rowElement.getAttribute("id");
                 $.ajax({
-                    url:"/stocks/"+ID,
+                    url:host+"/stocks/"+ID,
                     method:"DELETE",
                     dateType:"JSON",
                     success:function(result){
