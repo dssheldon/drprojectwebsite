@@ -55,6 +55,7 @@ class StockDao:
 
     def getAll(self):
         #obtain all values from the database
+        cnx = mysql.connector.connect()
         cursor = self.db.cursor()
         sql = 'select * from stock_close'
         cursor.execute(sql)
