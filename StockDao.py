@@ -77,6 +77,7 @@ class StockDao:
             resultAsDict = self.convertToDict(result)
             returnArray.append(resultAsDict)
         
+        cursor.close()
         db.close()
         return returnArray
 
