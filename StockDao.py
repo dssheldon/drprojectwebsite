@@ -12,14 +12,14 @@ import db1config as cfg
 class StockDao:
     db = ""
     def __init__(self):
-        self.db=""
+        #self.db=""
         #connect to the database
-#        self.db = mysql.connector.connect(
-#            host = cfg.mysql['host'],
-#            user= cfg.mysql['username'],
-#            password = cfg.mysql['password'],
-#            database =cfg.mysql['database']
-#        )
+        self.db = mysql.connector.connect(
+            host = cfg.mysql['host'],
+            user= cfg.mysql['username'],
+            password = cfg.mysql['password'],
+            database =cfg.mysql['database']
+        )
 
 #    def connect(self):
 #        self.db = mysql.connector.connect(
