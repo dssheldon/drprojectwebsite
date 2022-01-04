@@ -22,6 +22,7 @@ class StockDao:
 
     def create(self, stock):
         #create a new record within the database
+        db.connect()
         cursor = self.db.cursor()
         sql = "insert into stock_close (ID, SYMBOL, OPEN, CLOSE, VOLUME) values (%s,%s,%s,%s,%s)"
         values = [
@@ -34,9 +35,12 @@ class StockDao:
         cursor.execute(sql, values)
         self.db.commit()
         return cursor.lastrowid
+        #cursor.close()
+        #db.close()
 
     def addfromAPI(self, stock):
         #populate the database with the information received from the external API
+        db.connect()
         cursor = self.db.cursor()
         sql = "insert into stock_close (SYMBOL, OPEN, CLOSE, VOLUME) values (%s,%s,%s,%s)"
         values = [
@@ -53,6 +57,7 @@ class StockDao:
 
     def getAll(self):
         #obtain all values from the database
+        db.connect()
         cursor = self.db.cursor()
         sql = 'select * from stock_close'
         cursor.execute(sql)
@@ -66,6 +71,7 @@ class StockDao:
 
     def findById(self, ID):
         #find an item from the database based on it's ID
+        db.connect()
         cursor = self.db.cursor()
         sql = 'select * from stock_close where ID = %s'
         values = [ ID ]
@@ -76,6 +82,7 @@ class StockDao:
 
     def update(self, stock):
         #update a value in te database
+       db.connect()
        cursor = self.db.cursor()
        sql = "update stock_close set symbol = %s, open = %s, close = %s, volume = %s where ID = %s"
        values = [
@@ -92,6 +99,7 @@ class StockDao:
 
     def delete(self, ID):
         #delete an item in the database
+       db.connect()
        cursor = self.db.cursor()
        sql = 'delete from stock_close where ID = %s'
        values = [ ID ]
